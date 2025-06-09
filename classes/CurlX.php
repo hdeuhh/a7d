@@ -115,12 +115,13 @@ class CurlX
      * @return void
      */
     private static function AutoRouter($args) : void 
-    {
-        switch (strtoupper($args['METHOD'])) {
-            case 'TUNNEL': self::Tunnel($args); break;
-            case 'CUSTOM': self::proxyAuth($args); break;
-        }
+{
+    $method = strtoupper($args['METHOD'] ?? '');
+    switch ($method) {
+        case 'TUNNEL': self::Tunnel($args); break;
+        case 'CUSTOM': self::proxyAuth($args); break;
     }
+}
 
     /**
      * Created a file in the temporal DIRECTORY and import to current curl structure
