@@ -145,7 +145,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0"
+                "php": ">=8.2.0"
             },
             "require-dev": {
                 "symfony/phpunit-bridge": "^5.5 || ^6.0"
@@ -490,7 +490,7 @@
         }
     ],
     "platform": {
-        "php": "8.2.23"
+        "php": "8.2.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
