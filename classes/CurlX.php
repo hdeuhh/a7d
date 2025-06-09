@@ -116,14 +116,17 @@ class CurlX
      */
    private static function AutoRouter($args) : void 
 {
-    $method = '';
-    if (is_array($args) && isset($args['METHOD'])) {
-        $method = strtoupper($args['METHOD']);
-    }
-
+    if (!is_array($args) || empty($args)) return;
+    
+    $method = strtoupper($args['METHOD'] ?? '');
+    
     switch ($method) {
-        case 'TUNNEL': self::Tunnel($args); break;
-        case 'CUSTOM': self::proxyAuth($args); break;
+        case 'TUNNEL': 
+            if (isset($args['SERVER'])) self::Tunnel($args); 
+            break;
+        case 'CUSTOM': 
+            if (isset($args['SERVER'], $args['AUTH'])) self::proxyAuth($args); 
+            break;
     }
 }
 
