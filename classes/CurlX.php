@@ -115,32 +115,25 @@ class CurlX
      * @return void
      */
 
-   private static function AutoRouter($args) : void 
+   private static function AutoRouter($args = null) : void 
 {
-    // Skip kalo args bukan array atau kosong
-    if (!is_array($args) || empty($args)) {
+    // 1. Skip jika args null atau bukan array
+    if ($args === null || !is_array($args)) {
         return;
     }
 
-    // Pakai null coalescing biar gak error undefined index
-    $method = strtoupper($args['METHOD'] ?? 'NONE');
+    // 2. Ambil METHOD dengan default value 'DEFAULT' jika tidak ada
+    $method = strtoupper($args['METHOD'] ?? 'DEFAULT');
 
-    switch ($method) {
-        case 'TUNNEL':
-            if (!empty($args['SERVER'])) {
-                self::Tunnel($args);
-            }
-            break;
-            
-        case 'CUSTOM':
-            if (!empty($args['SERVER']) && !empty($args['AUTH'])) {
-                self::proxyAuth($args);
-            }
-            break;
-            
-        default:
-            // Do nothing kalo METHOD tidak valid
-            break;
+    // 3. Handle Tunnel
+    if ($method === 'TUNNEL' && isset($args['SERVER'])) {
+        self::Tunnel($args);
+        return;
+    }
+
+    // 4. Handle Custom Auth
+    if ($method === 'CUSTOM' && isset($args['SERVER'], $args['AUTH'])) {
+        self::proxyAuth($args);
     }
 }
 
